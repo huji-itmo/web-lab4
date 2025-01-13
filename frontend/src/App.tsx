@@ -1,28 +1,17 @@
 import "./App.css";
 import { Canvas } from "@react-three/fiber";
-
-const Box = ({ position }) => {
-    return (
-        <mesh position={position}>
-            <boxGeometry args={[0.75, 0.75, 0.75]}></boxGeometry>
-            <meshStandardMaterial color="orange"></meshStandardMaterial>
-        </mesh>
-    );
-};
+import { Vector3 } from "three";
+import { Cat } from "./components/Cat";
+import { OrbitControls } from "@react-three/drei";
 
 function App() {
     return (
         <>
-            <Canvas>
-                <directionalLight position={[0, 0, 2]}></directionalLight>
-                <ambientLight intensity={0.1}></ambientLight>
-
-                <group position={[2,0,0]}>
-                    <Box position={[-1, -1, 1]} />
-                    <Box position={[1, -1, 1]} />
-                    <Box position={[1, 1, 1]} />
-                    <Box position={[-1, 1, 1]} />
-                </group>
+            <Canvas className="canvas">
+                <directionalLight intensity={2} position={[0, 0, 2]}></directionalLight>
+                <ambientLight intensity={0.5}></ambientLight>
+                <Cat swing={0.5} speed={20} position={new Vector3(0, 0, 0)} scale={new Vector3(4, 4, 4)}></Cat>
+                <OrbitControls target={[0, 0.5, 0]} />
             </Canvas>
         </>
     );

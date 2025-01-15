@@ -16,11 +16,18 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
+const HistoryLazyImport = createFileRoute('/history')()
 const GameLazyImport = createFileRoute('/game')()
 const AboutLazyImport = createFileRoute('/about')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const HistoryLazyRoute = HistoryLazyImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/history.lazy').then((d) => d.Route))
 
 const GameLazyRoute = GameLazyImport.update({
   id: '/game',
@@ -65,6 +72,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GameLazyImport
       parentRoute: typeof rootRoute
     }
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -74,12 +88,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
   '/game': typeof GameLazyRoute
+  '/history': typeof HistoryLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
   '/game': typeof GameLazyRoute
+  '/history': typeof HistoryLazyRoute
 }
 
 export interface FileRoutesById {
@@ -87,14 +103,15 @@ export interface FileRoutesById {
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
   '/game': typeof GameLazyRoute
+  '/history': typeof HistoryLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/game'
+  fullPaths: '/' | '/about' | '/game' | '/history'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/game'
-  id: '__root__' | '/' | '/about' | '/game'
+  to: '/' | '/about' | '/game' | '/history'
+  id: '__root__' | '/' | '/about' | '/game' | '/history'
   fileRoutesById: FileRoutesById
 }
 
@@ -102,12 +119,14 @@ export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   AboutLazyRoute: typeof AboutLazyRoute
   GameLazyRoute: typeof GameLazyRoute
+  HistoryLazyRoute: typeof HistoryLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   AboutLazyRoute: AboutLazyRoute,
   GameLazyRoute: GameLazyRoute,
+  HistoryLazyRoute: HistoryLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -122,7 +141,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
-        "/game"
+        "/game",
+        "/history"
       ]
     },
     "/": {
@@ -133,6 +153,9 @@ export const routeTree = rootRoute
     },
     "/game": {
       "filePath": "game.lazy.tsx"
+    },
+    "/history": {
+      "filePath": "history.lazy.tsx"
     }
   }
 }

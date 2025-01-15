@@ -1,6 +1,6 @@
 import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
-import { Group, Mesh, Vector3 } from "three";
+import { Group, Vector3 } from "three";
 import { CatMesh } from "./CatMesh";
 
 
@@ -31,7 +31,7 @@ export function DancingCat({ position, scale, speed, swing }: { position: Vector
             <mesh
                 scale={scale}
                 position={position}
-                onPointerEnter={(event) => { event.stopPropagation(); setIsHovered(true); }}
+                onPointerEnter={() => setIsHovered(true)}
                 onPointerLeave={() => setIsHovered(false)}
             >
                 <boxGeometry args={[0.4, 0.4, 0.4]}></boxGeometry>
@@ -42,7 +42,7 @@ export function DancingCat({ position, scale, speed, swing }: { position: Vector
                 >
                 </meshStandardMaterial>
             </mesh>
-        </group>
+        </group >
 
     );
 }

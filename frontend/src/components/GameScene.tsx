@@ -1,11 +1,11 @@
-import { Vector3 } from "three";
+import { Vector2, Vector3 } from "three";
 import { CatOnARubberBand } from "./CatOnARubberBand";
 import { Physics, RigidBody } from "@react-three/rapier";
-import { Plane } from "@react-three/drei";
+import { Target } from "./Target";
 
 export function GameScene() {
     return (
-        <Physics>
+        <Physics debug>
             <directionalLight intensity={2} position={[0, 0, 2]}></directionalLight>
             <ambientLight intensity={1}></ambientLight>
             <CatOnARubberBand position={new Vector3(0, 2, 0)} scale={new Vector3(4, 4, 4)}>
@@ -15,14 +15,15 @@ export function GameScene() {
             <RigidBody type="fixed" restitution={0.5}>
                 <mesh position={[0, -1, 0]}>
                     <boxGeometry args={[100, 0.5, 100]} />
-                    <meshStandardMaterial color="white" />
+                    <meshStandardMaterial color="grey" />
                 </mesh>
             </RigidBody>
+            <Target
+                position={new Vector3(0, 5, 20)}
+                size={new Vector2(5, 5)}
+                contactCallback={(arg) => { console.log(arg); }}>
 
-            <mesh rotation={[0, Math.PI, 0]} position={[0, 5, 20]}>
-                <planeGeometry args={[5, 5]} /> {/* Width and height of the plane */}
-                <meshStandardMaterial color="green" /> {/* Material for the plane */}
-            </mesh>
+            </Target>
         </Physics>
     );
 }

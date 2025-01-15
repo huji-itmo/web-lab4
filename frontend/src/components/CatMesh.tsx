@@ -1,7 +1,7 @@
 import { useGLTF } from "@react-three/drei";
 import { ThreeEvent } from "@react-three/fiber";
 import { forwardRef, useEffect, useState } from "react";
-import { Box3, Group, Mesh, Vector3 } from "three";
+import { Box3, Group, Vector3 } from "three";
 
 interface CatModelProps {
     onPointerDown?: (event: ThreeEvent<PointerEvent>) => void;
@@ -25,10 +25,8 @@ export const CatMesh = forwardRef<Group, CatModelProps>((props, ref) => {
             const center = new Vector3(0, 0, 0);
             box.getCenter(center);
 
-            center.add(new Vector3(0, 0, 0))
-
             // Adjust the position of the model to center it
-            // scene.position.sub(center);
+            scene.position.sub(center);
             setSubtracted(true);
         }
     }, []);

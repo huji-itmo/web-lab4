@@ -1,16 +1,14 @@
 import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
-import { Mesh, Vector3 } from "three";
-import { useGLTF } from '@react-three/drei';
+import { Group, Mesh, Vector3 } from "three";
+import { CatMesh } from "./CatMesh";
 
 
 export function DancingCat({ position, scale, speed, swing }: { position: Vector3, scale: Vector3, speed: number, swing: number }) {
-    const { scene } = useGLTF("/cat_model.glb");
-
     const [isHovered, setIsHovered] = useState(false);
 
 
-    const ref = useRef<Mesh>(null);
+    const ref = useRef<Group>(null);
 
 
     useFrame((state, delta) => {
@@ -28,22 +26,17 @@ export function DancingCat({ position, scale, speed, swing }: { position: Vector
     });
 
     return (
-        <group position={position}>
-            <mesh
-                ref={ref}
-                scale={scale}
-            >
-                <primitive object={scene} />
-            </mesh>
+        <group>
+            <CatMesh ref={ref} position={position} scale={scale}></CatMesh>
             <mesh
                 scale={scale}
-                position={new Vector3(0, position.y + 0.2 * scale.y, 0)}
+                position={position}
                 onPointerEnter={(event) => { event.stopPropagation(); setIsHovered(true); }}
                 onPointerLeave={() => setIsHovered(false)}
             >
                 <boxGeometry args={[0.4, 0.4, 0.4]}></boxGeometry>
                 <meshStandardMaterial
-                    visible={false}
+                    // visible={false}
                     wireframe
                     color={isHovered ? "orange" : "lightblue"}
                 >

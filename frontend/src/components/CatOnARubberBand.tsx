@@ -1,33 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import { Box3, Mesh, Vector2, Vector3 } from "three";
-import { OrbitControls, useGLTF } from '@react-three/drei';
+import { Box3, Group, Mesh, Vector2, Vector3 } from "three";
+import { OrbitControls } from '@react-three/drei';
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 import { OrbitControls as OrbitControlsType } from 'three-stdlib'; // Import the type
+import { CatMesh } from "./CatMesh";
 
 export function CatOnARubberBand({ position, scale }: { position: Vector3, scale: Vector3 }) {
-    const { scene } = useGLTF("/cat_model.glb");
-
     const [isHovered, setIsHovered] = useState(false);
 
     const [isHoldingMouseOn, setIsHoldingMouseOn] = useState(false);
     const [clickedMousePosition, setClickedMousePosition] = useState(new Vector2(0, 0));
     // const [defaultPos, setDefaultPos] = useState(new Vector3(position.x, position.y, position.z));
 
-    useEffect(() => {
-        if (catRef.current) {
-            // Compute the bounding box of the model
-            const box = new Box3().setFromObject(catRef.current);
-
-            // Calculate the center of the bounding box
-            const center = new Vector3();
-            box.getCenter(center);
-
-            // Adjust the position of the model to center it
-            catRef.current.position.sub(center);
-        }
-    }, [scene]);
-
-    const catRef = useRef<Mesh>(null);
+    const catRef = useRef<Group>(null);
     const orbitControlsRef = useRef<OrbitControlsType>(null);
 
 
@@ -63,36 +48,22 @@ export function CatOnARubberBand({ position, scale }: { position: Vector3, scale
             return;
         }
 
-        // let yaw = state.camera.rotation.x;
-        // let multiplier = {
-        //     x: Math.sin(yaw),
-        //     y: -Math.cos(yaw),
-        // }
-
         const pointerOffset = new Vector2(state.pointer.x - clickedMousePosition.x, state.pointer.y - clickedMousePosition.y)
 
-        // console.log(yaw)
-
-        // catRef.current.position.x = position.x
-        // catRef.current.position.z = position.y
         catRef.current.rotation.y = pointerOffset.x
         catRef.current.rotation.x = pointerOffset.y
     })
-
-
 
     return (
         <>
             <OrbitControls ref={orbitControlsRef} target={[0, 0.5, 0]} />
             <group position={position}>
-                <mesh
-                    onPointerDown={onMouseKeyDown}
-
+                <CatMesh
                     ref={catRef}
+                    position={position}
                     scale={scale}
-                >
-                    <primitive object={scene} />
-                </mesh>
+                    onPointerDown={onMouseKeyDown} >
+                </CatMesh>
                 <mesh
                     scale={scale}
                     position={new Vector3(0, position.y + 0.2 * scale.y, 0)}

@@ -1,11 +1,10 @@
-import { Grid } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { Suspense } from 'react'
 import { Loading } from '../components/Loading'
-import { Vector3 } from 'three'
 import "./Canvas.css";
-import { CatOnARubberBand } from '../components/CatOnARubberBand'
+import { GameScene } from '../components/GameScene'
+import { Grid } from '@react-three/drei';
 
 
 export const Route = createLazyFileRoute('/game')({
@@ -30,11 +29,7 @@ function RouteComponent() {
     return (
         <Suspense fallback={<Loading></Loading>}>
             <Canvas className="canvas">
-                {/* <MousePositionLogger></MousePositionLogger> */}
-                <directionalLight intensity={2} position={[0, 0, 2]}></directionalLight>
-                <ambientLight intensity={0.5}></ambientLight>
-                <CatOnARubberBand position={new Vector3(0, 0, 0)} scale={new Vector3(4, 4, 4)}>
-                </CatOnARubberBand>
+                <GameScene></GameScene>
                 <Grid args={[10.5, 10.5]} {...gridConfig}></Grid>
             </Canvas>
         </Suspense>

@@ -2,7 +2,7 @@ import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
 import { Mesh, Vector3 } from "three";
 
-const Box = ({ position }: { position: Vector3 }) => {
+export const Box = ({ position }: { position: Vector3 }) => {
 
     const ref = useRef<Mesh>(null);
 

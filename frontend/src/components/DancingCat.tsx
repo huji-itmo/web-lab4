@@ -4,7 +4,7 @@ import { Mesh, Vector3 } from "three";
 import { useGLTF } from '@react-three/drei';
 
 
-export function Cat({ position, scale, speed, swing }: { position: Vector3, scale: Vector3, speed: number, swing: number }) {
+export function DancingCat({ position, scale, speed, swing }: { position: Vector3, scale: Vector3, speed: number, swing: number }) {
     const { scene } = useGLTF("/cat_model.glb");
 
     const [isHovered, setIsHovered] = useState(false);
@@ -37,11 +37,11 @@ export function Cat({ position, scale, speed, swing }: { position: Vector3, scal
             </mesh>
             <mesh
                 scale={scale}
-                position={new Vector3(0, position.y + 0.125 * scale.y, 0)}
+                position={new Vector3(0, position.y + 0.2 * scale.y, 0)}
                 onPointerEnter={(event) => { event.stopPropagation(); setIsHovered(true); }}
                 onPointerLeave={() => setIsHovered(false)}
             >
-                <boxGeometry args={[0.75, 0.75, 0.75]}></boxGeometry>
+                <boxGeometry args={[0.4, 0.4, 0.4]}></boxGeometry>
                 <meshStandardMaterial
                     visible={false}
                     wireframe

@@ -28,20 +28,20 @@ export const CatMesh = forwardRef<Group, CatModelProps>((props, ref) => {
             center.add(new Vector3(0, 0, 0))
 
             // Adjust the position of the model to center it
-            scene.position.sub(center);
+            // scene.position.sub(center);
             setSubtracted(true);
         }
-    }, [scene]);
+    }, []);
 
     return (
-        <group ref={ref}>
-            <mesh
+
+        <group position={position} ref={ref} >
+            <mesh position={position}
                 onPointerDown={onPointerDown}
-                position={position}
                 scale={scale}
             >
                 <primitive object={scene} />
             </mesh>
-        </group>
+        </group >
     )
 });

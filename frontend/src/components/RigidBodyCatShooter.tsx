@@ -47,10 +47,7 @@ export function RigidBodyCatShooter({ angleX, angleY }: ShooterProps) {
     };
 
 
-    return (
-        <RigidBody type="fixed" ref={rigidBodyRef} colliders="ball">
-            <CatMesh ref={catRef}></CatMesh>
-        </RigidBody>
-    )
+    // return (
+    // )
 
 }

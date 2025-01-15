@@ -23,3 +23,16 @@
 hs_err_pid*
 replay_pid*
 **/node_modules
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+bin
+
+**.env
+*.war
+*.war.*
+
+**/wildfly-20.0.1.Final.tar.gz

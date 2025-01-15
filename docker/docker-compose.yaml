@@ -39,6 +39,8 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     env_file:
       - .env
+volumes:
+  pg-data:
 
 networks:
   wildfly-network:

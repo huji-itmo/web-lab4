@@ -1,7 +1,7 @@
 #!/usr/bin/sh
 
 cd frontend
-# bun run build
+bun run build
 cd ..
 
 mv backend/app/src/main/webapp/WEB-INF backend/app/src/main/WEB-INF

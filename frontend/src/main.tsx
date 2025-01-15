@@ -3,8 +3,9 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createRouter, RouterProvider } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen.ts'
-import { Provider } from 'react-redux'
+import { Provider as ReduxProvider } from 'react-redux'
 import { store } from './state/state.ts'
+import { ThemeProvider } from './components/theme-provider.tsx'
 
 const router = createRouter({ routeTree })
 
@@ -17,8 +18,10 @@ declare module '@tanstack/react-router' {
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <Provider store={store}>
-            <RouterProvider router={router} />
-        </Provider>
-    </StrictMode>,
+        <ThemeProvider defaultTheme="dark">
+            <ReduxProvider store={store}>
+                <RouterProvider router={router} />
+            </ReduxProvider>
+        </ThemeProvider>
+    </StrictMode>
 )

@@ -36,7 +36,7 @@ export function DancingCat({ position, scale, speed, swing }: { position: Vector
             >
                 <boxGeometry args={[0.4, 0.4, 0.4]}></boxGeometry>
                 <meshStandardMaterial
-                    // visible={false}
+                    visible={false}
                     wireframe
                     color={isHovered ? "orange" : "lightblue"}
                 >

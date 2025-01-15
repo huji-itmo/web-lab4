@@ -22,7 +22,6 @@ public class DataBaseManager {
     public void init() {
         try {
             sessionFactory = HibernateSessionFactory.getSessionFactory();
-
         } catch (Throwable ex) {
             System.err.println("Инициализация SessionFactory завершилась неудачей: " + ex);
             throw new RuntimeException(ex);

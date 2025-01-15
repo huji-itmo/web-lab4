@@ -13,15 +13,12 @@ repositories {
 
 dependencies {
     implementation("com.google.code.gson:gson:2.11.0");
-    implementation("org.hibernate.orm:hibernate-core:6.6.1.Final")
-    implementation("org.postgresql:postgresql:42.7.3")
-    implementation("org.hibernate:hibernate-core:5.6.14.Final")
-    implementation("org.hibernate:hibernate-entitymanager:5.6.14.Final")
-    implementation("jakarta.platform:jakarta.jakartaee-api:10.0.0")
 
-
-    // https://mvnrepository.com/artifact/org.primefaces/primefaces
-    implementation("org.primefaces:primefaces:14.0.9")
+    implementation("org.hibernate.orm:hibernate-core:6.6.1.Final");
+    implementation("org.postgresql:postgresql:42.7.3");
+    implementation("org.hibernate:hibernate-core:5.6.14.Final");
+    implementation("org.hibernate:hibernate-entitymanager:5.6.14.Final");
+    implementation("jakarta.platform:jakarta.jakartaee-api:10.0.0");
 
     testImplementation(platform("org.junit:junit-bom:5.11.3"))
 	testImplementation("org.junit.jupiter:junit-jupiter")

@@ -1,4 +1,4 @@
-import{r as qe,e as uA,g as ny,j as qn}from"./index-7FPpT3cv.js";/**
+import{r as qe,e as uA,g as ny,j as qn}from"./index-BNV5wD2I.js";/**
  * @license
  * Copyright 2010-2024 Three.js Authors
  * SPDX-License-Identifier: MIT

@@ -2,8 +2,8 @@ import { Vector2, Vector3 } from "three";
 import { CatOnARubberBand } from "./CatOnARubberBand";
 import { Physics, RigidBody } from "@react-three/rapier";
 import { Target } from "./Target";
-import { Provider, useDispatch } from "react-redux";
-import { AppDispatch, store } from "@/state/state";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/state/state";
 import { addPoint } from "@/state/points/PointesSlice";
 import { HitResult } from "./table/columns";
 
@@ -14,7 +14,7 @@ export function GameScene() {
     function contactCallback(arg: Vector2) {
 
 
-        let res: HitResult = {
+        const res: HitResult = {
             x: arg.x,
             y: arg.y,
             r: 1,

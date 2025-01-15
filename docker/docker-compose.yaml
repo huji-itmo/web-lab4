@@ -1,0 +1,45 @@
+services:
+  wildfly:
+    build:
+      context: .
+      dockerfile: Dockerfile.java17-wildfly-34.0.1Final
+      args:
+        WILDFLY_VERSION: 34.0.1.Final
+    container_name: java17-wildfly-34.0.1Final
+    environment:
+      - WILDFLY_VERSION=34.0.1Final
+    volumes:
+      - ./deployments:/opt/jboss/wildfly/standalone/deployments/
+    ports:
+      - 8080:8080
+    networks:
+      - wildfly-network
+    env_file:
+      - .env
+  pg:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
+      args:
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    networks:
+      - wildfly-network
+    shm_size: 128mb
+    ports:
+      - 5432:5432
+    volumes:
+      - pg-data:/var/lib/postgresql/data:Z
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: pg
+      POSTGRES_DB: studs
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    env_file:
+      - .env
+
+networks:
+  wildfly-network:
+    driver: bridge

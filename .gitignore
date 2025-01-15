@@ -35,4 +35,5 @@ bin
 *.war
 *.war.*
 
-**/wildfly-20.0.1.Final.tar.gz
+**/wildfly-**.tar.gz
+**/.env

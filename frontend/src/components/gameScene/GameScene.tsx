@@ -17,19 +17,20 @@ export function GameScene() {
 
     function contactCallback(arg: Vector2) {
         const res: HitResult = {
-            x: arg.x,
-            y: arg.y,
+            x: +arg.x.toFixed(4),
+            y: +arg.y.toFixed(4),
             r: 1,
             hit: true,
             serverTime: "hui",
             durationInMilliseconds: "pizda"
         };
 
+
         console.log(res);
         dispatch(addPoint(res))
         toast({
             title: "Есть попадание!!!",
-            description: "x: " + arg.x.toFixed(4) + " y: " + arg.y.toFixed(4),
+            description: "x: " + res.x + " y: " + res.y,
         });
     }
 

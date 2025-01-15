@@ -36,6 +36,6 @@ export const columns: ColumnDef<HitResult>[] = [
     },
     {
         accessorKey: "durationInMilliseconds",
-        header: "durationInMilliseconds",
+        header: "Duration In Milliseconds",
     },
 ]

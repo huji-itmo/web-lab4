@@ -3,7 +3,7 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import { Suspense } from 'react'
 import { Loading } from '../components/Loading'
 import "./Canvas.css";
-import { GameScene } from '../components/GameScene'
+import { GameScene } from '../components/gameScene/GameScene'
 import { Grid } from '@react-three/drei';
 
 

@@ -3,7 +3,7 @@ import { Euler, Group, Vector2, Vector3 } from "three";
 import { OrbitControls } from '@react-three/drei';
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 import { OrbitControls as OrbitControlsType } from 'three-stdlib'; // Import the type
-import { CatMesh } from "./CatMesh";
+import { CatMesh } from "../CatMesh";
 import { CapsuleCollider, RapierRigidBody, RigidBody } from "@react-three/rapier";
 
 export function CatOnARubberBand({ position, scale }: { position: Vector3, scale: Vector3 }) {

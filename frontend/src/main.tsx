@@ -6,6 +6,7 @@ import { routeTree } from './routeTree.gen.ts'
 import { Provider as ReduxProvider } from 'react-redux'
 import { store } from './state/state.ts'
 import { ThemeProvider } from './components/theme-provider.tsx'
+import { Toaster } from './components/ui/toaster.tsx'
 
 const router = createRouter({ routeTree })
 
@@ -21,6 +22,7 @@ createRoot(document.getElementById('root')!).render(
         <ThemeProvider defaultTheme="dark">
             <ReduxProvider store={store}>
                 <RouterProvider router={router} />
+                <Toaster></Toaster>
             </ReduxProvider>
         </ThemeProvider>
     </StrictMode>

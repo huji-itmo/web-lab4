@@ -1,19 +1,21 @@
 import { Vector2, Vector3 } from "three";
 import { CatOnARubberBand } from "./CatOnARubberBand";
-import { Physics, RigidBody } from "@react-three/rapier";
-import { Target } from "./Target";
+import { Physics } from "@react-three/rapier";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/state/state";
 import { addPoint } from "@/state/points/PointesSlice";
-import { HitResult } from "./table/columns";
+import { HitResult } from "../table/columns";
+import { useToast } from "@/hooks/use-toast";
+import { Target } from "./Target";
+import { Ground } from "./Ground";
 
 export function GameScene() {
 
     const dispatch = useDispatch<AppDispatch>();
+    const { toast } = useToast();
+
 
     function contactCallback(arg: Vector2) {
-
-
         const res: HitResult = {
             x: arg.x,
             y: arg.y,
@@ -21,25 +23,28 @@ export function GameScene() {
             hit: true,
             serverTime: "hui",
             durationInMilliseconds: "pizda"
-        }
+        };
+
         console.log(res);
         dispatch(addPoint(res))
+        toast({
+            title: "Есть попадание!!!",
+            description: "x: " + arg.x.toFixed(4) + " y: " + arg.y.toFixed(4),
+        });
     }
 
     return (
         <Physics>
             <directionalLight intensity={2} position={[0, 0, 2]}></directionalLight>
             <ambientLight intensity={1}></ambientLight>
-            <CatOnARubberBand position={new Vector3(0, 2, 0)} scale={new Vector3(4, 4, 4)}>
+
+            <CatOnARubberBand
+                position={new Vector3(0, 2, 0)}
+                scale={new Vector3(4, 4, 4)}>
             </CatOnARubberBand>
 
-            {/* Ground */}
-            <RigidBody type="fixed" restitution={0.5}>
-                <mesh position={[0, -1, 0]}>
-                    <boxGeometry args={[100, 0.5, 100]} />
-                    <meshStandardMaterial color="grey" />
-                </mesh>
-            </RigidBody>
+            <Ground></Ground>
+
             <Target
                 position={new Vector3(0, 5, 20)}
                 size={new Vector2(5, 5)}

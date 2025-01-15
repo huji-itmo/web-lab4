@@ -17,14 +17,16 @@ public class HibernateSessionFactory {
 
     public static SessionFactory getSessionFactory() throws IOException {
         if (config == null) {
-            String postgresUser = Objects.requireNonNull(System.getenv(USER_ENV_NAME), "Not found env variable " + USER_ENV_NAME);
-            String postgresPassword = Objects.requireNonNull(System.getenv(PASSWORD_ENV_NAME), "Not found env variable " + PASSWORD_ENV_NAME);
+            String postgresUser = Objects.requireNonNull(System.getenv(USER_ENV_NAME),
+                    "Not found env variable " + USER_ENV_NAME);
+            String postgresPassword = Objects.requireNonNull(System.getenv(PASSWORD_ENV_NAME),
+                    "Not found env variable " + PASSWORD_ENV_NAME);
 
             config = new Configuration()
-                .configure("hibernate.cfg.xml")
-                .setProperty("hibernate.connection.username", postgresUser)
-                .setProperty("hibernate.connection.password", postgresPassword)
-                .addAnnotatedClass(HitResult.class);
+                    .configure("hibernate.cfg.xml")
+                    .setProperty("hibernate.connection.username", postgresUser)
+                    .setProperty("hibernate.connection.password", postgresPassword)
+                    .addAnnotatedClass(HitResult.class);
 
         }
 

@@ -13,7 +13,12 @@ import lombok.NoArgsConstructor;
 @Data
 public class RequestData implements Serializable {
 
-    private Long x;
+    private static final Double LEFT_BOUNDARY = -5D;
+    private static final Double RIGHT_BOUNDARY = 5D;
+    private static final Double BOTTOM_BOUNDARY = -5D;
+    private static final Double UPPER_BOUNDARY = 5D;
+
+    private Double x;
     private Double y;
     private Long r;
 
@@ -24,7 +29,7 @@ public class RequestData implements Serializable {
         checkRValue();
     }
 
-    private void throwIfXYRParametersEmpty() throws MissingParametersException{
+    private void throwIfXYRParametersEmpty() throws MissingParametersException {
 
         String errorString = "Missing parameters:";
         boolean hasMissingParameter = false;
@@ -58,15 +63,15 @@ public class RequestData implements Serializable {
     }
 
     private double checkYValue() throws BadParameterException {
-        if (y < -5.0D || y > 5.0D) {
+        if (y <= BOTTOM_BOUNDARY || y >= UPPER_BOUNDARY) {
             throw new BadParameterException("Y parameter must be in range [-5,3]");
         }
 
         return y;
     }
 
-    private long checkXValue() throws BadParameterException {
-        if (x <= -5L || x >= 3L) {
+    private double checkXValue() throws BadParameterException {
+        if (x <= LEFT_BOUNDARY || x >= RIGHT_BOUNDARY) {
             throw new BadParameterException("X parameter must be in range [-5,3]");
         }
 

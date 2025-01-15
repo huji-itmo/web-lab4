@@ -1,4 +1,4 @@
-import { Grid, OrbitControls } from '@react-three/drei'
+import { Grid } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { Suspense } from 'react'

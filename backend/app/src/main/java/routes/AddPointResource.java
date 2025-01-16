@@ -15,7 +15,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/add-point")
+@Path("points")
 public class AddPointResource {
 
     @Inject
@@ -36,6 +36,7 @@ public class AddPointResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("add")
     public Response addPoint(String jsonString) {
         try {
             RequestData data = gson.fromJson(jsonString, RequestData.class);

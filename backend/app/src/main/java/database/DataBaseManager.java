@@ -1,6 +1,5 @@
 package database;
 
-
 import java.util.List;
 
 import org.hibernate.Session;
@@ -13,6 +12,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import lombok.Getter;
 
 @ApplicationScoped
+@Managed
 public class DataBaseManager {
     private SessionFactory sessionFactory;
     @Getter

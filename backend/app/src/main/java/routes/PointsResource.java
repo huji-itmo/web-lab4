@@ -12,7 +12,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/points")
+@Path("points")
 public class PointsResource {
 
     @Inject
@@ -20,6 +20,7 @@ public class PointsResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("list")
     public String getPoints() {
         dataBaseManager.cachePointsFromDatabase();
 

@@ -7,7 +7,6 @@ plugins {
 }
 
 repositories {
-    // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
 
@@ -18,7 +17,11 @@ dependencies {
     implementation("org.postgresql:postgresql:42.7.3");
     implementation("org.hibernate:hibernate-core:5.6.14.Final");
     implementation("org.hibernate:hibernate-entitymanager:5.6.14.Final");
-    implementation("jakarta.platform:jakarta.jakartaee-api:10.0.0");
+
+    compileOnly("jakarta.platform:jakarta.jakartaee-api:10.0.0")
+    implementation(platform("org.glassfish.jersey:jersey-bom:3.1.2"))
+    implementation("org.glassfish.jersey.containers:jersey-container-servlet")
+    implementation("org.glassfish.jersey.inject:jersey-hk2")
 
     testImplementation(platform("org.junit:junit-bom:5.11.3"))
 	testImplementation("org.junit.jupiter:junit-jupiter")
@@ -28,15 +31,12 @@ dependencies {
 
 testing {
     suites {
-        // Configure the built-in test suite
         val test by getting(JvmTestSuite::class) {
-            // Use JUnit4 test framework
             useJUnit("4.13.2")
         }
     }
 }
 
-// Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
@@ -44,6 +44,5 @@ java {
 }
 
 application {
-    // Define the main class for the application.
     mainClass = "org.example.App"
 }

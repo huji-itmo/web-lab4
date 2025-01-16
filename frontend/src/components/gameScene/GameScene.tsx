@@ -27,7 +27,6 @@ export function GameScene() {
             durationInMilliseconds: "pizda"
         };
 
-
         console.log(res);
         dispatch(addPoint(res))
         toast({
@@ -37,7 +36,7 @@ export function GameScene() {
     }
 
     return (
-        <Physics debug>
+        <Physics>
             <directionalLight intensity={2} position={[0, 0, 2]}></directionalLight>
             <ambientLight intensity={1}></ambientLight>
 

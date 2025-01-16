@@ -11,6 +11,8 @@
         "editor.defaultFormatter": "redhat.java"
     },
     "cSpell.words": [
-        "gson"
+        "cooldown",
+        "gson",
+        "Millis"
     ]
 }

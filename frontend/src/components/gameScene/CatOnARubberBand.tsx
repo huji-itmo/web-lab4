@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Euler, Group, Quaternion, Vector2, Vector3 } from "three";
+import { Vector2, Vector3 } from "three";
 import { OrbitControls } from '@react-three/drei';
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 import { OrbitControls as OrbitControlsType } from 'three-stdlib'; // Import the type
@@ -19,10 +19,10 @@ function eulerToQuaternion({ x: roll, y: pitch, z: yaw }: Vector3): Rotation {
 
 function quaternionToVector(rotation: Rotation): Vector3 {
     return new Vector3(
-        rotation.y,
-        -rotation.x,
+        rotation.y * Math.sqrt(3),
+        -rotation.x * Math.sqrt(3),
         rotation.w,
-    ).normalize();
+    );
 }
 
 export function CatOnARubberBand({ position, scale, cooldownInMillis }: { position?: Vector3, scale?: Vector3, cooldownInMillis: number }) {

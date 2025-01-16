@@ -1,7 +1,7 @@
 import { Center, useGLTF } from "@react-three/drei";
 import { ThreeEvent } from "@react-three/fiber";
-import { forwardRef, useEffect, useState } from "react";
-import { Box3, Group, Vector3 } from "three";
+import { forwardRef } from "react";
+import { Group, Vector3 } from "three";
 
 interface CatModelProps {
     onPointerDown?: (event: ThreeEvent<PointerEvent>) => void;

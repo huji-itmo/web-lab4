@@ -3,25 +3,50 @@ import { CollisionEnterPayload, RigidBody } from "@react-three/rapier";
 import { useState } from "react";
 import { TextureLoader, Vector2, Vector3 } from "three";
 
-export function Target({ position, size, contactCallback }: { position: Vector3, size: Vector2, contactCallback?: (point: Vector2) => void }) {
+type TargetArgs = {
+    position: Vector3,
+    size: Vector2,
+    contactCallback?: (point: Vector2) => void,
+    cooldownInMillis: number,
+}
+
+export function Target({ position, size, contactCallback, cooldownInMillis }: TargetArgs) {
 
     const texture = useLoader(TextureLoader, '/target.png');
 
     const [lastHitPoint, setLastHitPoint] = useState<Vector3 | null>(null);
+    const [inCooldown, setCooldown] = useState(false);
+
 
 
     const handleCollision = (event: CollisionEnterPayload) => {
+        if (inCooldown) {
+            return;
+        }
+
         const { manifold } = event;
 
         const contactPoint = manifold.solverContactPoint(0);
+
+        setCooldown(true);
+
+        setTimeout(() => {
+            setCooldown(false)
+        }, cooldownInMillis);
+
         setLastHitPoint(new Vector3(contactPoint.x, contactPoint.y, contactPoint.z));
+
+        if (contactCallback == null) {
+            return;
+        }
 
         contactPoint.x = contactPoint.x - position.x;
         contactPoint.y = contactPoint.y - position.y;
         contactPoint.z = contactPoint.z - position.z;
 
-        if (contactCallback != null)
-            contactCallback(new Vector2(contactPoint.x / size.x, contactPoint.y / size.y));
+        contactCallback(new Vector2(contactPoint.x / size.x, contactPoint.y / size.y));
+
+
     }
 
 

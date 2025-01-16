@@ -14,6 +14,8 @@ export function GameScene() {
     const dispatch = useDispatch<AppDispatch>();
     const { toast } = useToast();
 
+    const COOLDOWN_IN_MILLIS = 5000
+
 
     function contactCallback(arg: Vector2) {
         const res: HitResult = {
@@ -35,11 +37,12 @@ export function GameScene() {
     }
 
     return (
-        <Physics>
+        <Physics debug>
             <directionalLight intensity={2} position={[0, 0, 2]}></directionalLight>
             <ambientLight intensity={1}></ambientLight>
 
             <CatOnARubberBand
+                cooldownInMillis={COOLDOWN_IN_MILLIS}
                 position={new Vector3(0, 2, 0)}
                 scale={new Vector3(4, 4, 4)}>
             </CatOnARubberBand>
@@ -47,11 +50,11 @@ export function GameScene() {
             <Ground></Ground>
 
             <Target
+                cooldownInMillis={COOLDOWN_IN_MILLIS}
                 position={new Vector3(0, 5, 20)}
                 size={new Vector2(5, 5)}
                 contactCallback={contactCallback}>
             </Target>
         </Physics>
-
     );
 }

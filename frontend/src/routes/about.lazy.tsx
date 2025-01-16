@@ -22,7 +22,8 @@ function About() {
                     autoRotate={true}
                     autoRotateSpeed={5}></OrbitControls>
                 <AsciiRenderer
-                    fgColor="white"
+
+                    fgColor="lightblue"
                     bgColor={"black"}
                     /** Colorize output (very expensive!), default: false */
                     color={false}

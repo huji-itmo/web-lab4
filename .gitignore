@@ -38,3 +38,4 @@ bin
 **/wildfly-**.tar.gz
 **/.env
 **/.env
+backend/src/main/resources/META-INF/resources

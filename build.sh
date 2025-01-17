@@ -4,14 +4,14 @@ cd frontend
 bun run build
 cd ..
 
-mv backend/app/src/main/webapp/WEB-INF backend/app/src/main/WEB-INF
-rm -rf backend/app/src/main/webapp/
-mkdir -p backend/app/src/main/webapp/
-mv backend/app/src/main/WEB-INF backend/app/src/main/webapp/WEB-INF
+export BACKEND_STATIC_CONTENT_HOLDER="backend/src/main/resources/META-INF/resources"
+export FRONTEND_STATIC_CONTENT_HOLDER="frontend/dist/**"
 
-cp -r frontend/dist/** backend/app/src/main/webapp/
+
+rm -rf $BACKEND_STATIC_CONTENT_HOLDER
+mkdir -p $BACKEND_STATIC_CONTENT_HOLDER
+cp -r $FRONTEND_STATIC_CONTENT_HOLDER $BACKEND_STATIC_CONTENT_HOLDER
 
 cd backend
-gradle war
+bash copy_to_docker.sh
 cd ..
-cp backend/app/build/libs/*.war docker/deployments

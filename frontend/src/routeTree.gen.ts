@@ -16,12 +16,19 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
+const LoginLazyImport = createFileRoute('/login')()
 const HistoryLazyImport = createFileRoute('/history')()
 const GameLazyImport = createFileRoute('/game')()
 const AboutLazyImport = createFileRoute('/about')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const LoginLazyRoute = LoginLazyImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/login.lazy').then((d) => d.Route))
 
 const HistoryLazyRoute = HistoryLazyImport.update({
   id: '/history',
@@ -79,6 +86,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HistoryLazyImport
       parentRoute: typeof rootRoute
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -89,6 +103,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutLazyRoute
   '/game': typeof GameLazyRoute
   '/history': typeof HistoryLazyRoute
+  '/login': typeof LoginLazyRoute
 }
 
 export interface FileRoutesByTo {
@@ -96,6 +111,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutLazyRoute
   '/game': typeof GameLazyRoute
   '/history': typeof HistoryLazyRoute
+  '/login': typeof LoginLazyRoute
 }
 
 export interface FileRoutesById {
@@ -104,14 +120,15 @@ export interface FileRoutesById {
   '/about': typeof AboutLazyRoute
   '/game': typeof GameLazyRoute
   '/history': typeof HistoryLazyRoute
+  '/login': typeof LoginLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/game' | '/history'
+  fullPaths: '/' | '/about' | '/game' | '/history' | '/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/game' | '/history'
-  id: '__root__' | '/' | '/about' | '/game' | '/history'
+  to: '/' | '/about' | '/game' | '/history' | '/login'
+  id: '__root__' | '/' | '/about' | '/game' | '/history' | '/login'
   fileRoutesById: FileRoutesById
 }
 
@@ -120,6 +137,7 @@ export interface RootRouteChildren {
   AboutLazyRoute: typeof AboutLazyRoute
   GameLazyRoute: typeof GameLazyRoute
   HistoryLazyRoute: typeof HistoryLazyRoute
+  LoginLazyRoute: typeof LoginLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -127,6 +145,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutLazyRoute: AboutLazyRoute,
   GameLazyRoute: GameLazyRoute,
   HistoryLazyRoute: HistoryLazyRoute,
+  LoginLazyRoute: LoginLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -142,7 +161,8 @@ export const routeTree = rootRoute
         "/",
         "/about",
         "/game",
-        "/history"
+        "/history",
+        "/login"
       ]
     },
     "/": {
@@ -156,6 +176,9 @@ export const routeTree = rootRoute
     },
     "/history": {
       "filePath": "history.lazy.tsx"
+    },
+    "/login": {
+      "filePath": "login.lazy.tsx"
     }
   }
 }

@@ -1,15 +1,10 @@
 services:
-  wildfly:
+  quarkus:
     build:
       context: .
-      dockerfile: Dockerfile.java17-wildfly-34.0.1Final
-      args:
-        WILDFLY_VERSION: 34.0.1.Final
-    container_name: java17-wildfly-34.0.1Final
+      dockerfile: Dockerfile.jvm
     environment:
-      - WILDFLY_VERSION=34.0.1Final
-    volumes:
-      - ./deployments:/opt/jboss/wildfly/standalone/deployments/
+        - QUARKUS_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
     ports:
       - 8080:8080
     networks:

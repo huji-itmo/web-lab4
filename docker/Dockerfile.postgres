@@ -2,6 +2,8 @@ FROM postgres:16.6
 
 ARG POSTGRES_USER
 
+RUN groupadd -r database_group && useradd -r -g database_group ${POSTGRES_USER}
+
 USER ${POSTGRES_USER}
 
 RUN mkdir -p /docker-entrypoint-initdb.d

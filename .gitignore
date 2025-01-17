@@ -37,3 +37,4 @@ bin
 
 **/wildfly-**.tar.gz
 **/.env
+**/.env

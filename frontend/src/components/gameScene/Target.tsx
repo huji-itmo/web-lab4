@@ -8,9 +8,10 @@ type TargetArgs = {
     size: Vector2,
     contactCallback?: (point: Vector2) => void,
     cooldownInMillis: number,
+    pointColor: string
 }
 
-export function Target({ position, size, contactCallback, cooldownInMillis }: TargetArgs) {
+export function Target({ position, size, contactCallback, cooldownInMillis, pointColor }: TargetArgs) {
 
     const texture = useLoader(TextureLoader, '/target.png');
 
@@ -44,7 +45,6 @@ export function Target({ position, size, contactCallback, cooldownInMillis }: Ta
 
         contactCallback(new Vector2(contactPoint.x / size.x, contactPoint.y / size.y));
 
-
     }
 
 
@@ -60,7 +60,7 @@ export function Target({ position, size, contactCallback, cooldownInMillis }: Ta
                 position={lastHitPoint == null ? new Vector3(0, 0, 0) : lastHitPoint}
                 visible={lastHitPoint != null}>
                 <sphereGeometry args={[0.5]}></sphereGeometry>
-                <meshStandardMaterial color={"green"} />
+                <meshStandardMaterial color={pointColor} />
             </mesh>
         </>
 

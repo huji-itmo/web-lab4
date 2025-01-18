@@ -7,11 +7,14 @@ import { addPoint } from "@/state/points/PointesSlice";
 import { useToast } from "@/hooks/use-toast";
 import { Target } from "./Target";
 import { Ground } from "./Ground";
+import { useState } from "react";
 
 export function GameScene() {
 
     const dispatch = useDispatch<AppDispatch>();
     const { toast } = useToast();
+
+    const [pointColor, setPointColor] = useState("green");
 
     const COOLDOWN_IN_MILLIS = 5000
 
@@ -47,6 +50,7 @@ export function GameScene() {
                     description: "x: " + data.x + " y: " + data.y + " inside shape: " + data.hit,
                 });
 
+                setPointColor(data.hit ? "green" : "red")
 
                 console.log(data);
                 dispatch(addPoint(data))
@@ -70,7 +74,8 @@ export function GameScene() {
                 cooldownInMillis={COOLDOWN_IN_MILLIS}
                 position={new Vector3(0, 5, 20)}
                 size={new Vector2(5, 5)}
-                contactCallback={contactCallback}>
+                contactCallback={contactCallback}
+                pointColor={pointColor}>
             </Target>
         </Physics>
     );

@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { sha256 } from "js-sha256";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "@tanstack/react-router";
 
 
 export function RegisterCard() {
@@ -13,6 +14,7 @@ export function RegisterCard() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const { toast } = useToast();
+    const navigate = useNavigate();
 
 
     function tryLogin() {
@@ -31,6 +33,8 @@ export function RegisterCard() {
                         title: "Success.",
                         description: "Account created!"
                     });
+                    navigate({ to: "/login" });
+
                 } else {
                     toast({
                         title: "Failure.",

@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { sha256 } from "js-sha256";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "@tanstack/react-router";
 
 export function LoginCard() {
 
@@ -12,7 +13,7 @@ export function LoginCard() {
     const [password, setPassword] = useState("");
 
     const { toast } = useToast();
-
+    const navigate = useNavigate();
 
     function tryLogin() {
 
@@ -28,7 +29,8 @@ export function LoginCard() {
                 if (data.success == true) {
                     window.localStorage.setItem("session", data.session);
 
-                    location.pathname = "/";
+                    navigate({ to: "/" });
+
 
                 } else {
                     toast({

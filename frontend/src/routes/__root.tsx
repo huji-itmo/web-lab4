@@ -1,4 +1,4 @@
-import { createRootRoute, Link, Outlet, useBlocker } from '@tanstack/react-router'
+import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 import { useEffect, useState } from 'react'
 
@@ -15,23 +15,8 @@ function RouteComponent() {
         const session = window.localStorage.getItem("session");
 
         setAuthorized(session != null);
-    });
+    }, []);
 
-    useBlocker({
-        shouldBlockFn: () => {
-            if (authorized) {
-                return false;
-            }
-
-            return false;
-
-            // return (
-            //     next.fullPath !== '/about' &&
-            //     next.fullPath !== '/login'
-            // )
-        },
-        withResolver: true,
-    });
 
     return (
         <>

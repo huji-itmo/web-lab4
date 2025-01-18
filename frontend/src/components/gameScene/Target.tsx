@@ -17,8 +17,6 @@ export function Target({ position, size, contactCallback, cooldownInMillis }: Ta
     const [lastHitPoint, setLastHitPoint] = useState<Vector3 | null>(null);
     const [inCooldown, setCooldown] = useState(false);
 
-
-
     const handleCollision = (event: CollisionEnterPayload) => {
         if (inCooldown) {
             return;

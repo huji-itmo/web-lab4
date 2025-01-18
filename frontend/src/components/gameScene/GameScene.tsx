@@ -4,7 +4,6 @@ import { Physics } from "@react-three/rapier";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/state/state";
 import { addPoint } from "@/state/points/PointesSlice";
-import { HitResult } from "../table/columns";
 import { useToast } from "@/hooks/use-toast";
 import { Target } from "./Target";
 import { Ground } from "./Ground";
@@ -17,22 +16,41 @@ export function GameScene() {
     const COOLDOWN_IN_MILLIS = 5000
 
 
+
     function contactCallback(arg: Vector2) {
-        const res: HitResult = {
+        const dataToSend = {
             x: +arg.x.toFixed(4),
             y: +arg.y.toFixed(4),
             r: 1,
-            hit: true,
-            serverTime: "hui",
-            durationInMilliseconds: "pizda"
-        };
+        }
 
-        console.log(res);
-        dispatch(addPoint(res))
-        toast({
-            title: "Есть попадание!!!",
-            description: "x: " + res.x + " y: " + res.y,
-        });
+        fetch("/api/points/add", {
+            method: "POST",
+            headers: {
+                "Authorization": `${window.localStorage.getItem("session")}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dataToSend),
+        })
+            .then(responce => responce.json())
+            .then(data => {
+                if (data.error != null) {
+                    toast({
+                        title: "Error.",
+                        description: `${data.error}`,
+                    });
+                    return;
+                }
+
+                toast({
+                    title: "HIT!!!",
+                    description: "x: " + data.x + " y: " + data.y + " inside shape: " + data.hit,
+                });
+
+
+                console.log(data);
+                dispatch(addPoint(data))
+            });
     }
 
     return (

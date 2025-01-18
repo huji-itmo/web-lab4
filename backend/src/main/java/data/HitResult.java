@@ -30,6 +30,8 @@ public class HitResult extends PanacheEntity {
     private String durationMilliSeconds;
     @Column(name = "serverTime")
     private String serverTime;
+    @Column(name = "owner")
+    private String owner;
 
     public String toJsonFields() {
         return String.format(Locale.US, """
@@ -50,7 +52,7 @@ public class HitResult extends PanacheEntity {
                     """, x, y, r, hit ? "true" : "false", durationMilliSeconds, serverTime);
     }
 
-    public HitResult(Double x, Double y, Long r, boolean hit, long durationNanoSeconds) {
+    public HitResult(String owner, Double x, Double y, Long r, boolean hit, long durationNanoSeconds) {
         DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         String formattedDateCustom = ZonedDateTime.now().format(customFormatter);
 
@@ -60,26 +62,27 @@ public class HitResult extends PanacheEntity {
         this.r = r;
         this.hit = hit;
         this.durationMilliSeconds = "%.3f ms".formatted((double) durationNanoSeconds / 1000000D);
+        this.owner = owner;
     }
 
-    public static HitResult createNewHitData(Double x, Double y, Long r, long startTime)
+    public static HitResult createNewHitData(String owner, Double x, Double y, Long r, long startTime)
             throws MissingParametersException, BadParameterException {
 
         RequestData data = new RequestData(x, y, r);
         data.throwIfBadData();
         boolean hitResult = CoordinateSpace.testHit(data);
         long durationNanoSeconds = System.nanoTime() - startTime;
-        HitResult hitData = new HitResult(data.getX(), data.getY(), data.getR(), hitResult, durationNanoSeconds);
+        HitResult hitData = new HitResult(owner, data.getX(), data.getY(), data.getR(), hitResult, durationNanoSeconds);
 
         return hitData;
     }
 
-    public static HitResult createNewHitData(RequestData data, long startTime)
+    public static HitResult createNewHitData(String owner, RequestData data, long startTime)
             throws MissingParametersException, BadParameterException {
         data.throwIfBadData();
         boolean hitResult = CoordinateSpace.testHit(data);
         long durationNanoSeconds = System.nanoTime() - startTime;
-        HitResult hitData = new HitResult(data.getX(), data.getY(), data.getR(), hitResult, durationNanoSeconds);
+        HitResult hitData = new HitResult(owner, data.getX(), data.getY(), data.getR(), hitResult, durationNanoSeconds);
 
         return hitData;
     }

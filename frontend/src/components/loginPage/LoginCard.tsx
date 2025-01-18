@@ -2,16 +2,44 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { sha256 } from "js-sha256";
+import { useToast } from "@/hooks/use-toast";
 
 export function LoginCard() {
 
-    const usernameInput = useRef(null);
-    const passwordInput = useRef(null);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    const { toast } = useToast();
+
 
     function tryLogin() {
 
+        fetch('/api/account/login', {
+            method: 'GET',
+            headers: {
+                'Authorization': `${username}:${sha256(password)}`,
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.success == true) {
+                    window.localStorage.setItem("session", data.session);
 
+                    location.pathname = "/";
+
+                } else {
+                    toast({
+                        title: "Failure.",
+                        description: `${data.error}`,
+                    });
+                }
+
+
+            })
+            .catch(error => console.error('Error:', error));
     }
 
     return <Card>
@@ -25,17 +53,17 @@ export function LoginCard() {
 
             <div className="space-y-1">
                 <Label htmlFor="name">Username</Label>
-                <Input ref={usernameInput} placeholder="name" id="name" />
+                <Input placeholder="name" id="name" onInput={(event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.target.value)} />
             </div>
 
             <div className="space-y-1">
                 <Label htmlFor="password">Password</Label>
-                <Input ref={passwordInput} placeholder="password" id="current" type="password" />
+                <Input placeholder="password" id="current" type="password" onInput={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)} />
             </div>
 
         </CardContent>
         <CardFooter>
-            <Button>Login</Button>
+            <Button onClick={tryLogin}>Login</Button>
         </CardFooter>
     </Card>
 }

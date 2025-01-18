@@ -6,8 +6,10 @@ import com.google.gson.GsonBuilder;
 import data.HitResult;
 import data.RequestData;
 import jakarta.annotation.PostConstruct;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -18,6 +20,9 @@ import jakarta.ws.rs.core.Response;
 public class AddPointResource {
 
     private Gson gson = null;
+
+    @Inject
+    AccountResource accountResource;
 
     @PostConstruct
     public void init() {
@@ -34,15 +39,23 @@ public class AddPointResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     @Path("add")
-    public Response addPoint(String jsonString) {
+    public Response addPoint(String jsonString, @HeaderParam("Authorization") String authHeader) {
         try {
+            String owner = accountResource.getSessionToUsername().get(authHeader);
+
+            if (owner == null) {
+                return Response.status(Response.Status.UNAUTHORIZED)
+                        .entity("{ \"error: \": \"not authorized\" }")
+                        .build();
+            }
+
             RequestData data = gson.fromJson(jsonString, RequestData.class);
             if (data == null) {
                 throw new Exception("The request body is empty. Expected JSON with fields x,y,r");
             }
             data.throwIfBadData();
 
-            HitResult newPoint = HitResult.createNewHitData(data, System.nanoTime());
+            HitResult newPoint = HitResult.createNewHitData(owner, data, System.nanoTime());
 
             newPoint.persist();
 

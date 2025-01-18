@@ -31,11 +31,11 @@ export const columns: ColumnDef<HitResult>[] = [
         header: "Is Hit",
     },
     {
-        accessorKey: "serverTime",
+        accessorKey: "server_time",
         header: "Server Time",
     },
     {
-        accessorKey: "durationInMilliseconds",
+        accessorKey: "duration_milliseconds",
         header: "Duration In Milliseconds",
     },
 ]

@@ -8,8 +8,9 @@ export const Route = createLazyFileRoute('/login')({
 })
 
 function RouteComponent() {
+
     return (
-        <div className="flex items-center w-screen h-screen justify-center">
+        <div className="flex items-center w-screen h-screen justify-center" >
             <Tabs defaultValue="login" className="place-content-center w-[400px]">
                 <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="login">Login</TabsTrigger>

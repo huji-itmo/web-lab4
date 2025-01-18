@@ -15,8 +15,8 @@ val quarkusPlatformVersion: String by project
 
 dependencies {
     implementation(enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
-    implementation("io.quarkus:quarkus-arc")
-    implementation("io.quarkus:quarkus-rest")
+    compileOnly("io.quarkus:quarkus-arc")
+    compileOnly("io.quarkus:quarkus-rest")
 
     implementation("com.google.code.gson:gson:2.11.0");
 
